@@ -63,8 +63,9 @@ class OpenTripMapTool:
             "entertainment": '["amenity"~"cinema|nightclub|theatre"]["leisure"~"amusement_arcade"]',
             "sightseeing": '["tourism"~"attraction|viewpoint|artwork"]',
             "adventure": '["leisure"~"sports_centre|water_park"]["tourism"="theme_park"]',
-            "religious": '["amenity"~"place_of_worship"]["historic"="monastery"]',
-            "nightlife": '["amenity"~"bar|pub|nightclub"]'
+            "religious": '["amenity"~"place_of_worship"]["religion"~"hindu|buddhist|jain|christian|muslim"]',
+            "nightlife": '["amenity"~"bar|pub|nightclub"]',
+            "temple": '["amenity"="place_of_worship"]["religion"~"hindu|buddhist|jain"]'
         }
         
         # Build query for ALL matching preferences
