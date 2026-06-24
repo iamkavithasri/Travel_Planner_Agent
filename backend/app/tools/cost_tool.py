@@ -18,34 +18,34 @@ class CostEstimator:
             "portugal": 1.0, "greece": 1.0, "china": 0.9,
             
             # Tier 3: Budget-friendly
-            "india": 0.4, "thailand": 0.5, "vietnam": 0.4, "indonesia": 0.45,
+            "india": 1.0, "thailand": 0.5, "vietnam": 0.4, "indonesia": 0.45,
             "philippines": 0.4, "egypt": 0.5, "turkey": 0.6, "mexico": 0.6,
             "brazil": 0.7, "argentina": 0.6, "poland": 0.7, "romania": 0.6
         }
         
-        # Base activity costs (USD) - will be multiplied by country factor
+        # Base activity costs (INR) - will be multiplied by country factor
         self.base_costs = {
-            "museum": {"min": 8, "max": 25, "avg": 15},
-            "gallery": {"min": 5, "max": 20, "avg": 12},
-            "attraction": {"min": 0, "max": 50, "avg": 20},
-            "restaurant": {"min": 10, "max": 80, "avg": 30},
-            "cafe": {"min": 3, "max": 15, "avg": 8},
-            "fast_food": {"min": 5, "max": 15, "avg": 8},
-            "park": {"min": 0, "max": 5, "avg": 0},
-            "garden": {"min": 0, "max": 10, "avg": 3},
-            "beach": {"min": 0, "max": 5, "avg": 0},
-            "monument": {"min": 0, "max": 15, "avg": 5},
-            "castle": {"min": 10, "max": 30, "avg": 18},
-            "tour": {"min": 25, "max": 150, "avg": 60},
-            "theme_park": {"min": 40, "max": 120, "avg": 70},
-            "entertainment": {"min": 15, "max": 80, "avg": 35},
-            "bar": {"min": 10, "max": 50, "avg": 25},
-            "nightclub": {"min": 15, "max": 80, "avg": 40},
-            "cinema": {"min": 8, "max": 20, "avg": 12},
-            "theatre": {"min": 20, "max": 100, "avg": 50},
-            "sports_centre": {"min": 10, "max": 40, "avg": 20},
-            "viewpoint": {"min": 0, "max": 10, "avg": 2}
-        }
+    "museum": {"min": 50, "max": 500, "avg": 200},
+    "gallery": {"min": 50, "max": 400, "avg": 150},
+    "attraction": {"min": 0, "max": 1000, "avg": 300},
+    "restaurant": {"min": 200, "max": 1500, "avg": 600},
+    "cafe": {"min": 100, "max": 500, "avg": 250},
+    "fast_food": {"min": 80, "max": 300, "avg": 200},
+    "park": {"min": 0, "max": 50, "avg": 0},
+    "garden": {"min": 0, "max": 100, "avg": 50},
+    "beach": {"min": 0, "max": 100, "avg": 0},
+    "monument": {"min": 0, "max": 300, "avg": 100},
+    "castle": {"min": 100, "max": 800, "avg": 300},
+    "tour": {"min": 500, "max": 5000, "avg": 1500},
+    "theme_park": {"min": 800, "max": 3000, "avg": 1800},
+    "entertainment": {"min": 300, "max": 2000, "avg": 800},
+    "bar": {"min": 300, "max": 3000, "avg": 1000},
+    "nightclub": {"min": 500, "max": 5000, "avg": 2000},
+    "cinema": {"min": 150, "max": 500, "avg": 250},
+    "theatre": {"min": 200, "max": 1500, "avg": 500},
+    "sports_centre": {"min": 100, "max": 1000, "avg": 400},
+    "viewpoint": {"min": 0, "max": 50, "avg": 0}
+}
         
         # Base durations (hours)
         self.base_durations = {
@@ -92,9 +92,10 @@ class CostEstimator:
             cost_range = self.base_costs["attraction"]
         
         # Calculate base cost with variation
-        avg = cost_range["avg"]
-        variation = random.uniform(-0.15, 0.15) * avg
-        base_cost = avg + variation
+        base_cost = random.uniform(
+            cost_range["min"],
+            cost_range["max"]
+                                  )
         
         # Apply country multiplier
         multiplier = self.get_country_multiplier(country)

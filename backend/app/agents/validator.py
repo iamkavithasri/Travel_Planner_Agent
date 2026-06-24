@@ -18,10 +18,15 @@ class BudgetValidator:
         # Calculate total cost
         total_cost = sum(day.total_cost for day in days)
         
+        #print("\n=== VALIDATOR ===")
+        #print("TOTAL COST:", total_cost)
+        #print("BUDGET:", self.total_budget)
+        #print("=================\n")
+        
         # Check budget constraint
         if total_cost > self.total_budget:
             overage = total_cost - self.total_budget
-            return False, f"Over budget by ${overage:.2f}", {
+            return False, f"Over budget by ₹{overage:.2f}", {
                 "total_cost": total_cost,
                 "budget": self.total_budget,
                 "overage": overage,

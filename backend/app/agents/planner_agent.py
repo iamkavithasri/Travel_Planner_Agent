@@ -86,6 +86,11 @@ class PlannerAgent:
             iteration += 1
 
             is_valid, reason, details = validator.validate_plan(current_plan)
+            
+            #print("\n=== VALIDATION RESULT ===")
+            #print("Reason:", reason)
+            #print("Details:", details)
+            #print("=========================\n")
 
             if is_valid:
                 self.memory.log_iteration(
@@ -158,20 +163,20 @@ class PlannerAgent:
 
         days: List[DayPlan] = []
 
-        activities_per_day = max(
-            2,
-            len(available_activities) // travel_input.num_days
-        )
+        activities_per_day = min(
+    6,
+    max(2, len(available_activities) // travel_input.num_days)
+)
+        days_activities = [[] for _ in range(travel_input.num_days)]
 
+        selected = available_activities[:activities_per_day * travel_input.num_days]
+
+        for i, act in enumerate(selected):
+                   days_activities[i % travel_input.num_days].append(act)
+
+        
         for day_num in range(travel_input.num_days):
-            start = day_num * activities_per_day
-            end = start + activities_per_day
-
-            slice_acts = available_activities[start:end]
-
-            if not slice_acts:
-                slice_acts = available_activities[:activities_per_day]
-
+            slice_acts = days_activities[day_num]
             day_activities = []
             day_cost = 0.0
             day_hours = 0.0

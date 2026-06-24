@@ -9,7 +9,7 @@ class OpenTripMapTool:
     def __init__(self):
         self.api_key = settings.OPENTRIPMAP_API_KEY
         self.nominatim_url = "https://nominatim.openstreetmap.org/search"
-        self.overpass_url = "http://overpass-api.de/api/interpreter"
+        self.overpass_url = "https://overpass-api.de/api/interpreter"
     
     def get_city_coordinates(self, city_name: str) -> Tuple[Optional[float], Optional[float], Optional[str]]:
         """
@@ -88,14 +88,26 @@ class OpenTripMapTool:
         );
         out body 150;
         """
+        #print("\n=== OVERPASS QUERY ===")
+        #print(overpass_query)
+        #print("======================\n")
         
         try:
             response = requests.post(
                 self.overpass_url,
-                data={"data": overpass_query},
-                timeout=35
+    data=overpass_query,
+    headers={
+        "Content-Type": "text/plain",
+        "User-Agent": "TravelPlannerAgent/1.0"
+    },
+    timeout=35
             )
-            
+            #print("STATUS:", response.status_code)
+            #print("CONTENT-TYPE:", response.headers.get("content-type"))
+            #print("BODY:")
+            #print(response.text[:1000])
+
+            response.raise_for_status()
             data = response.json()
             activities = []
             seen_names = set()  # Avoid duplicates
